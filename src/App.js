@@ -1,26 +1,74 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import PostList from './components/PostList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoaded: false,
+            posts: [],
+            users: [],
+            comments: [],
+        }
+    }
+
+    loadData = async () => {
+        const BASE_URL = 'https://jsonplaceholder.typicode.com';
+        fetch(`${BASE_URL}/posts`)
+            .then(response => response.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        posts: result
+                    });
+                });
+
+
+        fetch(`${BASE_URL}/users`)
+            .then(response => response.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        users: result
+                    });
+                });
+
+        fetch(`${BASE_URL}/comments`)
+            .then(response => response.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        comments: result
+                    });
+                });
+
+
+         setTimeout(() => {
+            this.setState({
+                isLoaded: true,
+            });
+        }, 2000);
+    };
+
+
+    render() {
+        return (
+            <div>
+                <h1 className='title'> Dynamic list of posts </h1>
+                {this.state.isLoaded ?
+                    <PostList posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>
+                    :
+                    <button
+                        className="btn"
+                        onClick={this.loadData}>
+                      Load
+                    </button>
+                }
+            </div>
+        );
+    }
 }
 
 export default App;
