@@ -8,11 +8,26 @@ class App extends React.Component {
         super(props);
         this.state = {
             isLoaded: false,
+            disable: false,
             posts: [],
             users: [],
             comments: [],
         }
     }
+
+    onLoad = () => {
+        this.setState(prev => {
+            return {
+                disable: !prev.disable
+            }
+        });
+        setTimeout(() => {
+            this.loadData().then(this.setState({
+                isLoaded: true
+            }))
+        }, 600)
+    };
+
 
     loadData = async () => {
         const BASE_URL = 'https://jsonplaceholder.typicode.com';
@@ -43,15 +58,7 @@ class App extends React.Component {
                         comments: result
                     });
                 });
-
-
-         setTimeout(() => {
-            this.setState({
-                isLoaded: true,
-            });
-        }, 2000);
     };
-
 
     render() {
         return (
@@ -62,8 +69,8 @@ class App extends React.Component {
                     :
                     <button
                         className="btn"
-                        onClick={this.loadData}>
-                      Load
+                        onClick={this.onLoad}>
+                        {this.state.disable ? "Loading..." : "Load"}
                     </button>
                 }
             </div>
