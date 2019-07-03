@@ -1,13 +1,13 @@
 import React from 'react';
 
-function User(props) {
+function User({user}) {
     return (
         <div className='post__users-data'>
-            <h2>Autor:</h2>
+            <h2 className='post__users-data_autor'>Autor:</h2>
             <div>
-                <div>{props.user.name}</div>
-                <div>{props.user.username}</div>
-                <div>{props.user.email}</div>
+                <div>{user.name}</div>
+                <div>{user.username}</div>
+                <div>{user.email}</div>
             </div>
         </div>
     )

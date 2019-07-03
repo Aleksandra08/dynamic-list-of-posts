@@ -19,37 +19,55 @@
     justify-content: center;
     align-items: center;
     border: 1px solid black;
+    border-radius: 1%;
+    margin: 15px 0;
+    padding: 10px;
 }
 
 .post__title {
-    display: flex;
-    justify-content: center;
+    margin: 10px auto;
+    text-align: center;
     font-style: italic;
-    background: #E1E1E1;
+    color: #B34EE9;
     width: 100%;
 }
 
 .post__body {
-    text-align: start;
+    text-align: center;
 }
 
 .post__users-data {
     width: 100%;
-    background: #E1E1E1;
+    background: #F0F0F0;
+
+}
+
+.post__comment {
+    width: 100%;
+    margin: 10px 0;
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+.post__comment_title {
+    color: #B34EE9;
+    text-align: center;
 }
 
 .post__comment-autor {
     font-weight: bold;
 }
 
-.post__comment {
-    width: 100%;
-    margin: 10px 0;
+.post__comment-link {
+    color: #9700E9;
 }
-.btn{
-    width: 100px;
+
+.btn {
+    width: 150px;
     height: 50px;
-   position: absolute;
+    position: absolute;
     left: 46%;
-    background: aqua;
+    background: #B34EE9;
+    color: white;
+    font-size: 20px;
 }

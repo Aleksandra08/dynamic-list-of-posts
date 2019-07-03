@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import PostList from './components/PostList'
+import {getPosts, getUsers, getComments} from "./api/getData";
 
 
 class App extends React.Component {
@@ -10,8 +11,6 @@ class App extends React.Component {
             isLoaded: false,
             disable: false,
             posts: [],
-            users: [],
-            comments: [],
         }
     }
 
@@ -29,35 +28,19 @@ class App extends React.Component {
     };
 
 
-    loadData = async () => {
-        const BASE_URL = 'https://jsonplaceholder.typicode.com';
-        fetch(`${BASE_URL}/posts`)
-            .then(response => response.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        posts: result
-                    });
-                });
+    async loadData() {
+        const [posts, users, comments] = await Promise.all([getPosts(), getUsers(), getComments()]);
+        let postWithAllData = posts.map((post) => {
+            return {
+                ...post,
+                user: users.find(user => user.id === post.userId),
+                comments: comments.filter(comment => comment.postId === post.id)
+            }
+        });
+        this.setState({
+            posts: postWithAllData,
+        })
 
-
-        fetch(`${BASE_URL}/users`)
-            .then(response => response.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        users: result
-                    });
-                });
-
-        fetch(`${BASE_URL}/comments`)
-            .then(response => response.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        comments: result
-                    });
-                });
     };
 
     render() {
@@ -65,13 +48,13 @@ class App extends React.Component {
             <div>
                 <h1 className='title'> Dynamic list of posts </h1>
                 {this.state.isLoaded ?
-                    <PostList posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>
+                    (<PostList posts={this.state.posts}/>)
                     :
-                    <button
+                    (<button
                         className="btn"
                         onClick={this.onLoad}>
                         {this.state.disable ? "Loading..." : "Load"}
-                    </button>
+                    </button>)
                 }
             </div>
         );

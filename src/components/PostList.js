@@ -2,14 +2,12 @@ import React from 'react';
 import Post from './../components/Post'
 
 
-function PostList(props) {
+function PostList({posts}) {
     return (
         <div className='list'>
-            {props.posts.map(el =>
-                <Post post={el}
-                      key={el.id}
-                      user={props.users}
-                      comments={props.comments}
+            {posts.map(post =>
+                <Post post={post}
+                      key={post.id}
                 />
             )}
         </div>

@@ -1,9 +1,9 @@
 import React from 'react';
-import Comment from './Comment'
+import Comments from './Comments'
 
-function CommentList(props) {
+function CommentList({comments}) {
     return (
-        <Comment comments={props.comments}/>
+        <Comments comments={comments}/>
     )
 }
 
