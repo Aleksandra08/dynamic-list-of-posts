@@ -20,13 +20,19 @@ class App extends React.Component {
                 disable: !prev.disable
             }
         });
-        setTimeout(() => {
-            this.loadData().then(this.setState({
-                isLoaded: true
-            }))
-        }, 600)
-    };
 
+        const delayPromise = new Promise((resolve) => {
+            setTimeout(resolve, 600);
+        });
+
+        const dataPromise = this.loadData();
+
+        delayPromise
+            .then(() => dataPromise)
+            .then(() => {
+                this.setState({isLoaded: true});
+            });
+    };
 
     async loadData() {
         const [posts, users, comments] = await Promise.all([getPosts(), getUsers(), getComments()]);
@@ -40,15 +46,25 @@ class App extends React.Component {
         this.setState({
             posts: postWithAllData,
         })
+    };
 
+    filterPosts = (event) => {
+        let currentValue = event.target.value.toUpperCase();
+        let postsWithFilter = this.state.posts.filter((post) => post.title.toUpperCase().includes(currentValue));
+        this.setState({
+            posts: postsWithFilter
+        })
     };
 
     render() {
         return (
-            <div>
+            <div className="box-of-posts">
                 <h1 className='title'> Dynamic list of posts </h1>
                 {this.state.isLoaded ?
-                    (<PostList posts={this.state.posts}/>)
+                    (<PostList
+                        posts={this.state.posts}
+                        filter={this.filterPosts}
+                    />)
                     :
                     (<button
                         className="btn"
