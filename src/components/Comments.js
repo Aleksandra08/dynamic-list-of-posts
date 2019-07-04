@@ -3,7 +3,6 @@ import React from 'react';
 function Comments({comments}) {
     return (
         <div>
-            <h2 className='post__comment_title'>Comments:</h2>
             {comments.map(comment => {
                 return (
                     <div key={comment.id} className='post__comment'>

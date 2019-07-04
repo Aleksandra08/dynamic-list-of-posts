@@ -10,6 +10,7 @@ function PostList({posts, filter}) {
                    type="text"
                    onChange={filter}
             />
+
             {posts.map(post =>
                 <Post post={post}
                       key={post.id}

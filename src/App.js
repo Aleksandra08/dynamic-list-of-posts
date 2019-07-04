@@ -11,8 +11,10 @@ class App extends React.Component {
             isLoaded: false,
             disable: false,
             posts: [],
+            filteredPosts: []
         }
     }
+
 
     onLoad = () => {
         this.setState(prev => {
@@ -45,6 +47,7 @@ class App extends React.Component {
         });
         this.setState({
             posts: postWithAllData,
+            filteredPosts: postWithAllData
         })
     };
 
@@ -52,17 +55,18 @@ class App extends React.Component {
         let currentValue = event.target.value.toUpperCase();
         let postsWithFilter = this.state.posts.filter((post) => post.title.toUpperCase().includes(currentValue));
         this.setState({
-            posts: postsWithFilter
+            filteredPosts: postsWithFilter
         })
     };
 
     render() {
+
         return (
             <div className="box-of-posts">
                 <h1 className='title'> Dynamic list of posts </h1>
                 {this.state.isLoaded ?
                     (<PostList
-                        posts={this.state.posts}
+                        posts={this.state.filteredPosts}
                         filter={this.filterPosts}
                     />)
                     :
