@@ -38,7 +38,7 @@ class App extends React.Component {
 
     async loadData() {
         const [posts, users, comments] = await Promise.all([getPosts(), getUsers(), getComments()]);
-        let postWithAllData = posts.map((post) => {
+        const postWithAllData = posts.map((post) => {
             return {
                 ...post,
                 user: users.find(user => user.id === post.userId),
@@ -53,7 +53,7 @@ class App extends React.Component {
 
     filterPosts = (event) => {
         let currentValue = event.target.value.toUpperCase();
-        let postsWithFilter = this.state.posts.filter((post) => post.title.toUpperCase().includes(currentValue));
+        const postsWithFilter = this.state.posts.filter((post) => post.title.toUpperCase().includes(currentValue));
         this.setState({
             filteredPosts: postsWithFilter
         })
@@ -64,17 +64,17 @@ class App extends React.Component {
         return (
             <div className="box-of-posts">
                 <h1 className='title'> Dynamic list of posts </h1>
-                {this.state.isLoaded ?
-                    (<PostList
-                        posts={this.state.filteredPosts}
-                        filter={this.filterPosts}
-                    />)
-                    :
-                    (<button
-                        className="btn"
-                        onClick={this.onLoad}>
-                        {this.state.disable ? "Loading..." : "Load"}
-                    </button>)
+                {this.state.isLoaded ? (
+                        <PostList
+                            posts={this.state.filteredPosts}
+                            filter={this.filterPosts}
+                        />)
+                    : (
+                        <button
+                            className="btn"
+                            onClick={this.onLoad}>
+                            {this.state.disable ? "Loading..." : "Load"}
+                        </button>)
                 }
             </div>
         );

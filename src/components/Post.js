@@ -12,23 +12,24 @@ class Post extends React.Component {
     }
 
     showComments = () => {
-        this.setState({
-            showListComments: !this.state.showListComments
-        })
+        this.setState((prev)=>({
+            showListComments: !prev.showListComments
+        }))
     };
 
 
     render() {
+        const {post}=this.props;
         return (
             <div className="post">
-                <h2 className='post__title'>{this.props.post.title}</h2>
-                <p className='post__body'> {this.props.post.body}</p>
-                <User user={this.props.post.user}/>
+                <h2 className='post__title'>{post.title}</h2>
+                <p className='post__body'> {post.body}</p>
+                <User user={post.user}/>
                 <button className="post__comment_btn"
                         onClick={this.showComments}>
                     Comments
                 </button>
-                {this.state.showListComments ? <CommentList comments={this.props.post.comments}/> : null}
+                {this.state.showListComments ? <CommentList comments={post.comments}/> : null}
             </div>
         )
     }
